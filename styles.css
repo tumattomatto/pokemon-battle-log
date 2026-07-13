@@ -268,12 +268,12 @@ a {
 
 .hero h1 {
   margin: .9rem 0 .7rem;
-  color: #fff;
+  color: #17115f;
   font-size: clamp(2rem, 5vw, 4.2rem);
   line-height: 1.06;
   font-weight: 1000;
   letter-spacing: 0;
-  text-shadow: 0 3px 0 var(--violet-dark), 0 0 20px rgba(65, 232, 255, .42);
+  text-shadow: 0 2px 0 rgba(255, 255, 255, .9), 0 0 20px rgba(65, 232, 255, .42);
 }
 
 .hero p {
@@ -819,6 +819,7 @@ textarea:focus {
 
   .hero h1 {
     font-size: 2rem;
+    word-break: keep-all;
   }
 
   .hero p {

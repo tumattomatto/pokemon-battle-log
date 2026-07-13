@@ -1,3 +1,4 @@
 # ローカル専用: 対戦記録と同梱Node.js環境はGitHubへ登録しない
 data/
 .runtime/
+README.md
