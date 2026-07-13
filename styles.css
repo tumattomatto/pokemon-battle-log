@@ -267,13 +267,20 @@ a {
 }
 
 .hero h1 {
+  display: inline-block;
+  max-width: 100%;
   margin: .9rem 0 .7rem;
+  padding: .18em .32em .24em;
+  border: 3px solid rgba(23, 17, 95, .9);
+  border-radius: var(--radius);
   color: #17115f;
+  background: rgba(255, 255, 255, .9);
   font-size: clamp(2rem, 5vw, 4.2rem);
   line-height: 1.06;
   font-weight: 1000;
   letter-spacing: 0;
-  text-shadow: 0 2px 0 rgba(255, 255, 255, .9), 0 0 20px rgba(65, 232, 255, .42);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .9);
+  box-shadow: 0 8px 20px rgba(4, 9, 49, .25);
 }
 
 .hero p {
