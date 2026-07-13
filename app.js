@@ -134,7 +134,7 @@ async function signIn(event) {
 }
 
 async function signOut() {
-  const { error } = await supabase.auth.signOut();
+  const { error } = await supabase.auth.signOut({ scope: "local" });
   if (error) alert("ログアウトに失敗しました。もう一度お試しください。");
 }
 
