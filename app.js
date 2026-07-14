@@ -91,6 +91,7 @@ function bindEvents() {
   els.seasonForm.addEventListener("submit", saveSeason);
   els.filterSeason.addEventListener("change", () => {
     state.filters.season = els.filterSeason.value;
+    renderStats();
     renderHistory();
   });
   els.filterResult.addEventListener("change", () => {
@@ -423,29 +424,24 @@ function renderSeasonFilter() {
 
 function renderStats() {
   els.statsGrid.innerHTML = "";
-
-  if (!state.seasons.length) {
-    els.statsGrid.innerHTML = '<div class="empty-state">シーズンを登録すると、シーズンごとの勝敗をここで確認できます。</div>';
-    return;
-  }
-
-  state.seasons
-    .slice()
-    .sort((a, b) => b.end.localeCompare(a.end))
-    .forEach((season) => {
-      const records = state.records.filter((record) => getSeasonForRecord(record)?.id === season.id);
-      const wins = records.filter((record) => record.result === "win").length;
-      const losses = records.length - wins;
-      const rate = records.length ? Math.round((wins / records.length) * 100) : 0;
-      const card = document.createElement("article");
-      card.className = "stat-card season-stat-card";
-      card.innerHTML = `
-        <span class="season-stat-name">${escapeHtml(season.name)}</span>
-        <strong>${wins}勝 ${losses}敗</strong>
-        <span class="season-stat-meta">${records.length ? `勝率 ${rate}% ・ ${records.length}戦` : "対戦記録なし"}</span>
-      `;
-      els.statsGrid.append(card);
-    });
+  const selectedSeason = state.seasons.find((season) => season.id === state.filters.season);
+  const records = selectedSeason
+    ? state.records.filter((record) => getSeasonForRecord(record)?.id === selectedSeason.id)
+    : state.filters.season === "none"
+      ? state.records.filter((record) => !getSeasonForRecord(record))
+      : state.records;
+  const wins = records.filter((record) => record.result === "win").length;
+  const losses = records.length - wins;
+  const rate = records.length ? Math.round((wins / records.length) * 100) : 0;
+  const label = selectedSeason ? selectedSeason.name : state.filters.season === "none" ? "未分類" : "すべてのシーズン";
+  const card = document.createElement("article");
+  card.className = "stat-card season-stat-card";
+  card.innerHTML = `
+    <span class="season-stat-name">${escapeHtml(label)}</span>
+    <strong>${wins}勝 ${losses}敗</strong>
+    <span class="season-stat-meta">${records.length ? `勝率 ${rate}% ・ ${records.length}戦` : "対戦記録なし"}</span>
+  `;
+  els.statsGrid.append(card);
 }
 
 function renderSeasons() {

@@ -268,12 +268,12 @@ a {
 
 .hero h1 {
   margin: .9rem 0 .7rem;
-  color: #17115f;
+  color: #fff;
   font-size: clamp(2rem, 5vw, 4.2rem);
   line-height: 1.06;
   font-weight: 1000;
   letter-spacing: 0;
-  text-shadow: 0 3px 0 var(--violet-dark), 0 0 20px rgba(65, 232, 255, .42);
+  text-shadow: 0 3px 0 #302d82, 0 0 20px rgba(65, 232, 255, .42);
 }
 
 .hero h1 span {
@@ -283,7 +283,7 @@ a {
 .hero p {
   width: min(620px, 100%);
   margin: 0;
-  color: #e8edff;
+  color: #454b94;
   font-size: 1.02rem;
   font-weight: 700;
 }
@@ -649,7 +649,7 @@ textarea:focus {
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: .75rem;
   margin-bottom: 1rem;
 }
@@ -687,7 +687,7 @@ textarea:focus {
 }
 
 .season-stat-card {
-  min-height: 118px;
+  min-height: 132px;
 }
 
 .season-stat-name {
