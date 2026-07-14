@@ -649,7 +649,7 @@ textarea:focus {
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: .75rem;
   margin-bottom: 1rem;
 }
@@ -684,6 +684,26 @@ textarea:focus {
   font-size: clamp(1.2rem, 2vw, 1.65rem);
   font-weight: 1000;
   line-height: 1.12;
+}
+
+.season-stat-card {
+  min-height: 118px;
+}
+
+.season-stat-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.season-stat-meta {
+  margin-top: .5rem;
+  color: #514b9e;
+  font-size: .78rem;
+}
+
+.stats-grid .empty-state {
+  grid-column: 1 / -1;
 }
 
 .filters-panel {

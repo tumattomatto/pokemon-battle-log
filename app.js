@@ -422,32 +422,30 @@ function renderSeasonFilter() {
 }
 
 function renderStats() {
-  const total = state.records.length;
-  const wins = state.records.filter((record) => record.result === "win").length;
-  const latest = getLatestSeasonStats();
-  const stats = [
-    ["総試合数", String(total)],
-    ["勝ち", String(wins)],
-    ["負け", String(total - wins)],
-    ["勝率", total ? `${Math.round((wins / total) * 100)}%` : "-"],
-    ["最新シーズン", latest.label],
-    ["登録パーティ", String(state.partyPresets.length)]
-  ];
   els.statsGrid.innerHTML = "";
-  stats.forEach(([label, value]) => {
-    const card = document.createElement("article");
-    card.className = "stat-card";
-    card.innerHTML = `<span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong>`;
-    els.statsGrid.append(card);
-  });
-}
 
-function getLatestSeasonStats() {
-  if (!state.seasons.length) return { label: "-" };
-  const latest = state.seasons.slice().sort((a, b) => b.end.localeCompare(a.end))[0];
-  const records = state.records.filter((record) => getSeasonForRecord(record)?.id === latest.id);
-  const wins = records.filter((record) => record.result === "win").length;
-  return { label: `${latest.name} (${records.length ? `${Math.round((wins / records.length) * 100)}%` : "-"})` };
+  if (!state.seasons.length) {
+    els.statsGrid.innerHTML = '<div class="empty-state">シーズンを登録すると、シーズンごとの勝敗をここで確認できます。</div>';
+    return;
+  }
+
+  state.seasons
+    .slice()
+    .sort((a, b) => b.end.localeCompare(a.end))
+    .forEach((season) => {
+      const records = state.records.filter((record) => getSeasonForRecord(record)?.id === season.id);
+      const wins = records.filter((record) => record.result === "win").length;
+      const losses = records.length - wins;
+      const rate = records.length ? Math.round((wins / records.length) * 100) : 0;
+      const card = document.createElement("article");
+      card.className = "stat-card season-stat-card";
+      card.innerHTML = `
+        <span class="season-stat-name">${escapeHtml(season.name)}</span>
+        <strong>${wins}勝 ${losses}敗</strong>
+        <span class="season-stat-meta">${records.length ? `勝率 ${rate}% ・ ${records.length}戦` : "対戦記録なし"}</span>
+      `;
+      els.statsGrid.append(card);
+    });
 }
 
 function renderSeasons() {
